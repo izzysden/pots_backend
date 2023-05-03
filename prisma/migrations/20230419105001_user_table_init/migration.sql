@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `user` ADD COLUMN `tpp` DOUBLE NOT NULL DEFAULT 0;
