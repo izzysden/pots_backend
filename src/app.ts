@@ -12,8 +12,11 @@ app.use(cors());
 
 app.use(router);
 
-app.all("*", (req, res) => {
-  res.status(404).send("URI not found!");
-});
+app.all("*", (req, res) =>
+  res.status(404).json({
+    code: 404,
+    message: "URI Not Found!",
+  })
+);
 
 app.listen(port);

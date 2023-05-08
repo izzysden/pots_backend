@@ -1,8 +1,9 @@
 import express from "express";
 import UserService from "./user";
-import { UserDto } from "../types/user";
 import PullService from "./pull";
 import LeaderboardService from "./leaderboard";
+import { UserDto } from "../types/user/dto";
+import { apiLimiter } from "../middleware";
 
 const router = express.Router();
 
@@ -13,12 +14,16 @@ router.get("/user/:username", async (req, res) =>
 router.post("/user", (req, res) =>
   res.send(user.createUser(req.body as UserDto))
 );
-router.delete("/user", (req, res) => res.send(user.deleteUser(req.body)));
+router.delete("/user", (req, res) =>
+  res.send(user.deleteUser(req.body as UserDto))
+);
 
 const pull = new PullService();
-router.patch("/pull/:username", async (req, res) =>
-  res.send(await pull.pullSword(req.params.username))
-);
+router.patch("/pull/:username", apiLimiter, async (req, res) => {
+  const result = await pull.pullSword(req.params.username);
+  if (Boolean(result)) res.send(result);
+  else res.status(429).send(result);
+});
 
 const leaderboard = new LeaderboardService();
 router.get("/leaderboard/tries/:page", async (req, res) =>

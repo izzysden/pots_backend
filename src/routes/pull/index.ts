@@ -27,7 +27,7 @@ class PullService {
       });
       prisma.$disconnect();
       return target.pulls === result.pulls ? false : true;
-    } else return "Too Many Requests";
+    } else return "Too many requests, please try again later.";
   };
 }
 

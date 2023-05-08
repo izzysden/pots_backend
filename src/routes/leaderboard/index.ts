@@ -1,35 +1,49 @@
-import { PrismaClient, User } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import { LeaderboardEntity } from "../../types/leaderboard";
+import { UserEntity } from "../../types/user";
 const prisma = new PrismaClient();
 const pageSize = 20;
 
 class LeaderboardService {
-  public getTriesLeaderboard = async (page: number): Promise<User[]> => {
+  public getTriesLeaderboard = async (
+    page: number
+  ): Promise<LeaderboardEntity> => {
     const offset = (page - 1) * pageSize;
-    const result = await prisma.user.findMany({
+    const result = (await prisma.user.findMany({
       skip: offset,
       take: pageSize,
       orderBy: {
         tries: "desc",
       },
-    });
+    })) as UserEntity[];
     prisma.$disconnect();
-    return result;
+    return {
+      leaderboardResponses: result,
+      totalPage: Math.ceil(result.length / 20),
+    };
   };
-  public getPullsLeaderboard = async (page: number): Promise<User[]> => {
+  public getPullsLeaderboard = async (
+    page: number
+  ): Promise<LeaderboardEntity> => {
     const offset = (page - 1) * pageSize;
-    const result = await prisma.user.findMany({
+    const result = (await prisma.user.findMany({
       skip: offset,
       take: pageSize,
       orderBy: {
         pulls: "desc",
       },
-    });
+    })) as UserEntity[];
     prisma.$disconnect();
-    return result;
+    return {
+      leaderboardResponses: result,
+      totalPage: Math.ceil(result.length / 20),
+    };
   };
-  public getTppLLeaderboard = async (page: number): Promise<User[]> => {
+  public getTppLLeaderboard = async (
+    page: number
+  ): Promise<LeaderboardEntity> => {
     const offset = (page - 1) * pageSize;
-    const result = await prisma.user.findMany({
+    const result = (await prisma.user.findMany({
       skip: offset,
       take: pageSize,
       where: {
@@ -38,15 +52,20 @@ class LeaderboardService {
         },
       },
       orderBy: {
-        pulls: "desc",
+        tpp: "asc",
       },
-    });
+    })) as UserEntity[];
     prisma.$disconnect();
-    return result;
+    return {
+      leaderboardResponses: result,
+      totalPage: Math.ceil(result.length / 20),
+    };
   };
-  public getTppHLeaderboard = async (page: number): Promise<User[]> => {
+  public getTppHLeaderboard = async (
+    page: number
+  ): Promise<LeaderboardEntity> => {
     const offset = (page - 1) * pageSize;
-    const result = await prisma.user.findMany({
+    const result = (await prisma.user.findMany({
       skip: offset,
       take: pageSize,
       where: {
@@ -55,11 +74,14 @@ class LeaderboardService {
         },
       },
       orderBy: {
-        pulls: "asc",
+        tpp: "desc",
       },
-    });
+    })) as UserEntity[];
     prisma.$disconnect();
-    return result;
+    return {
+      leaderboardResponses: result,
+      totalPage: Math.ceil(result.length / 20),
+    };
   };
 }
 
