@@ -1,6 +1,6 @@
-import { UserEntity } from "../user";
+import { User } from "@prisma/client";
 
-export interface LeaderboardEntity {
-  leaderboardResponses: UserEntity[];
+export interface LeaderboardType {
+  leaderboardResponses: User[];
   totalPage: number;
 }
