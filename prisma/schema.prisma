@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  username String    @id 
+  username String    @id @db.VarChar(16)
   tries    Int       @default(0)
   pulls    Int       @default(0)
   cooldown DateTime?

@@ -19,4 +19,9 @@ app.all("*", (req, res) =>
   })
 );
 
+app.use(function (err: any, req: any, res: any, next: any) {
+  console.log(err);
+  res.status(500).json({ message: "Internal Server Error" });
+});
+
 app.listen(port);
