@@ -1,6 +1,5 @@
 import { PrismaClient, User } from "@prisma/client";
 const prisma = new PrismaClient();
-
 class UserService {
   public getUserByUsername = async (
     username: string
@@ -17,5 +16,4 @@ class UserService {
     return result;
   };
 }
-
 export default UserService;

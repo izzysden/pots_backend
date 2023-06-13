@@ -7,7 +7,11 @@
     "type": "git",
     "url": "https://github.com/izzysden/pots_backend.git"
   },
-  "author": "izzysden <izzysden@naver.com>",
+  "author": {
+    "name": "izzysden",
+    "email": "izzysden@naver.com",
+    "url": "https://github.com/izzysden"
+  },
   "license": "ISC",
   "homepage": "https://github.com/izzysden/pots_backend",
   "dependencies": {

@@ -8,7 +8,7 @@ class LeaderboardService {
     page: number
   ): Promise<LeaderboardType> => {
     const offset = (page - 1) * pageSize;
-    const [result, totalPage] = await prisma.$transaction([
+    const [result, count] = await prisma.$transaction([
       prisma.user.findMany({
         orderBy: {
           tries: "desc",
@@ -21,14 +21,14 @@ class LeaderboardService {
     prisma.$disconnect();
     return {
       leaderboardResponses: result,
-      totalPage: Math.ceil(totalPage / pageSize),
+      totalPage: Math.ceil(count / pageSize),
     };
   };
   public getPullsLeaderboard = async (
     page: number
   ): Promise<LeaderboardType> => {
     const offset = (page - 1) * pageSize;
-    const [result, totalPage] = await prisma.$transaction([
+    const [result, count] = await prisma.$transaction([
       prisma.user.findMany({
         where: {
           pulls: {
@@ -52,14 +52,14 @@ class LeaderboardService {
     prisma.$disconnect();
     return {
       leaderboardResponses: result,
-      totalPage: Math.ceil(totalPage / pageSize),
+      totalPage: Math.ceil(count / pageSize),
     };
   };
   public getTppLLeaderboard = async (
     page: number
   ): Promise<LeaderboardType> => {
     const offset = (page - 1) * pageSize;
-    const [result, totalPage] = await prisma.$transaction([
+    const [result, count] = await prisma.$transaction([
       prisma.user.findMany({
         where: {
           pulls: {
@@ -83,14 +83,14 @@ class LeaderboardService {
     prisma.$disconnect();
     return {
       leaderboardResponses: result,
-      totalPage: Math.ceil(totalPage / pageSize),
+      totalPage: Math.ceil(count / pageSize),
     };
   };
   public getTppHLeaderboard = async (
     page: number
   ): Promise<LeaderboardType> => {
     const offset = (page - 1) * pageSize;
-    const [result, totalPage] = await prisma.$transaction([
+    const [result, count] = await prisma.$transaction([
       prisma.user.findMany({
         where: {
           pulls: {
@@ -114,7 +114,7 @@ class LeaderboardService {
     prisma.$disconnect();
     return {
       leaderboardResponses: result,
-      totalPage: Math.ceil(totalPage / pageSize),
+      totalPage: Math.ceil(count / pageSize),
     };
   };
 }
